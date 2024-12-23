@@ -1,0 +1,93 @@
+# Spring
+spring:
+  profiles:
+    active: ${SPRING_PROFILE}
+  application:
+    name: e-guard-api
+  datasource:
+    database-name: ${MYSQL_DATABASE_NAME}
+    url: ${MYSQL_SERVER_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: ${MYSQL_DRIVER_CLASS_NAME}
+    platform: ${MYSQL_PLATFORM}
+    hikari:
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      leak-detection-threshold: 30000
+      maxLifetime: 1800000
+      idleTimeout: 600000
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+          batch_size: ${MYSQL_BATCH_SIZE}
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+    initialize-schema: always
+  messages:
+    basename: messages
+    encoding: UTF-8
+  mail:
+    host: ${JAVA_MAIL_SENDER_HOST}
+    port: ${JAVA_MAIL_SENDER_PORT}
+    username: ${JAVA_MAIL_SENDER_EMAIL}
+    password: ${JAVA_MAIL_SENDER_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+# Server
+server:
+  port: ${SERVER_PORT}
+  error:
+    path: /error
+  servlet:
+    context-path: /eguard
+    session:
+      timeout: 1440m
+# Logger Properties
+logging:
+  level:
+    root: ${LOG_LEVEL}
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+  file:
+    path: ./logs/${SPRING_PROFILE}
+# Swagger
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED}
+# Security
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}
+aes-256-key: ${AES_256_KEY}
+# File
+file:
+  plan-file-dir: upload
+# Custom
+front-end-server: ${FRONT_END_SERVER}
